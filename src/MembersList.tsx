@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CountFilter } from './CountFilter';
 import { Filter } from './Filter';
@@ -34,6 +34,15 @@ export function MembersList({
     removeMember: (name: string) => void;
 }) {
     const [searchText, setSearchText] = useState('');
+
+    useEffect(() => {
+        setMembers(
+            initialMembers.filter((m) =>
+                m.name.toLowerCase().includes(searchText)
+            )
+        );
+    }, [searchText, initialMembers]);
+
     // TODO: rename filteredMembers to reflect the search purpose.. redundant naming..
     const filteredMembers = initialMembers.filter((m) =>
         m.name.toLowerCase().includes(searchText)
