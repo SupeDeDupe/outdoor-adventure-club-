@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { CountFilter } from './CountFilter';
 import { Filter } from './Filter';
 import { Activities, MemberCard } from './MemberCard';
 
@@ -41,6 +42,8 @@ export function MembersList({
     // TODO: should have used a filter state
     // const [filteredActivity, setFilteredActivity] = useState(null);
 
+    const [countFilter, setCountFilter] = useState(null as null | Activities);
+
     const filterByActivity = (activity: Activities | null) => {
         if (activity) {
             setMembers(
@@ -52,10 +55,20 @@ export function MembersList({
             setMembers(filteredMembers);
         }
     };
+    const count = countFilter
+        ? members.filter((m) => {
+              return m.activities.includes(countFilter);
+          }).length
+        : 0;
 
     return (
         <StyledList>
             <Filter filterByActivity={filterByActivity} />
+            <CountFilter
+                count={count}
+                countFilter={countFilter}
+                setCountFilter={setCountFilter}
+            />
             <div>
                 <label>Search list:</label>
                 <input
