@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Activities, MemberCard } from './MemberCard';
+
+const MEMBERS = [
+    {
+        name: 'Lizzy',
+        age: 25,
+        activities: [Activities.hiking]
+    },
+    {
+        name: 'Sarah',
+        age: 63,
+        activities: [Activities.running]
+    },
+    {
+        name: 'Andrew',
+        age: 55,
+        activities: [Activities.biking, Activities.hiking]
+    }
+];
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const maxRating = 5;
+    const ratedMembers = MEMBERS.map((m) => {
+        return { ...m, rating: Math.floor(Math.random() * maxRating) };
+    });
+    return (
+        <div className="App">
+            {ratedMembers.map((m) => {
+                return (
+                    <MemberCard
+                        name={m.name}
+                        age={m.age}
+                        activities={m.activities}
+                        rating={m.rating}
+                    />
+                );
+            })}
+        </div>
+    );
 }
 
 export default App;
