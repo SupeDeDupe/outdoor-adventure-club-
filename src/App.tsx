@@ -35,7 +35,7 @@ function App() {
                 name="q"
                 value={searchText}
             ></input>
-            <MembersList members={MEMBERS} />
+            <MembersList initialMembers={MEMBERS} />
         </div>
     );
 }

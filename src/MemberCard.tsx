@@ -46,9 +46,16 @@ type MemberCardProps = {
     age: number;
     rating: number;
     activities: Activities[];
+    removeMember: (name: string) => void;
 };
 
-export function MemberCard({ name, age, rating, activities }: MemberCardProps) {
+export function MemberCard({
+    name,
+    age,
+    rating,
+    activities,
+    removeMember
+}: MemberCardProps) {
     return (
         <StyledListItem>
             <div className="name">{name}</div>
@@ -57,6 +64,7 @@ export function MemberCard({ name, age, rating, activities }: MemberCardProps) {
             <div className="activities">
                 Activities: {activities.join(', ')}
             </div>
+            <button onClick={() => removeMember(name)}>Remove member</button>
         </StyledListItem>
     );
 }
