@@ -13,12 +13,22 @@ const StyledList = styled.li`
 
 type Member = { name: string; age: number; activities: Activities[] };
 
-export function MembersList({ initialMembers }: { initialMembers: Member[] }) {
+export function MembersList({
+    initialMembers,
+    currentSearch
+}: {
+    initialMembers: Member[];
+    currentSearch: string;
+}) {
     const [currMembers, setCurrMembers] = useState(initialMembers);
     const maxRating = 5;
     const ratedMembers = currMembers.map((m) => {
         return { ...m, rating: Math.floor(Math.random() * maxRating) };
     });
+
+    const filteredMembers = ratedMembers.filter((m) =>
+        m.name.includes(currentSearch)
+    );
 
     const removeMember = (name: string) => {
         const newMembersList = currMembers.filter((m) => m.name !== name);
@@ -27,7 +37,7 @@ export function MembersList({ initialMembers }: { initialMembers: Member[] }) {
 
     return (
         <StyledList>
-            {ratedMembers.map((m) => {
+            {filteredMembers.map((m) => {
                 return (
                     <MemberCard
                         name={m.name}
