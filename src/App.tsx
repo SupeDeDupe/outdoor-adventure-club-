@@ -22,20 +22,21 @@ const MEMBERS = [
 ];
 
 function App() {
-    const [searchText, setSearchText] = useState('');
+    const [currMembers, setCurrMembers] = useState(MEMBERS);
+    const maxRating = 5;
+    const ratedMembers = currMembers.map((m) => {
+        return { ...m, rating: Math.floor(Math.random() * maxRating) };
+    });
+    const removeMember = (name: string) => {
+        const newMembersList = currMembers.filter((m) => m.name !== name);
+        setCurrMembers(newMembersList);
+    };
     return (
         <div className="App">
-            <label>Search list:</label>
-            <input
-                onChange={(e) => {
-                    setSearchText(e.target.value);
-                }}
-                type="search"
-                id="members-search"
-                name="q"
-                value={searchText}
-            ></input>
-            <MembersList initialMembers={MEMBERS} currentSearch={searchText} />
+            <MembersList
+                initialMembers={ratedMembers}
+                removeMember={removeMember}
+            />
         </div>
     );
 }

@@ -11,32 +11,37 @@ const StyledList = styled.li`
     gap: 20px;
 `;
 
-type Member = { name: string; age: number; activities: Activities[] };
+type Member = {
+    name: string;
+    age: number;
+    activities: Activities[];
+    rating: number;
+};
 
 export function MembersList({
     initialMembers,
-    currentSearch
+    removeMember
 }: {
     initialMembers: Member[];
-    currentSearch: string;
+    removeMember: (name: string) => void;
 }) {
-    const [currMembers, setCurrMembers] = useState(initialMembers);
-    const maxRating = 5;
-    const ratedMembers = currMembers.map((m) => {
-        return { ...m, rating: Math.floor(Math.random() * maxRating) };
-    });
-
-    const filteredMembers = ratedMembers.filter((m) =>
-        m.name.includes(currentSearch)
+    const [searchText, setSearchText] = useState('');
+    const filteredMembers = initialMembers.filter((m) =>
+        m.name.toLowerCase().includes(searchText)
     );
-
-    const removeMember = (name: string) => {
-        const newMembersList = currMembers.filter((m) => m.name !== name);
-        setCurrMembers(newMembersList);
-    };
 
     return (
         <StyledList>
+            <label>Search list:</label>
+            <input
+                onChange={(e) => {
+                    setSearchText(e.target.value);
+                }}
+                type="search"
+                id="members-search"
+                name="q"
+                value={searchText}
+            />
             {filteredMembers.map((m) => {
                 return (
                     <MemberCard

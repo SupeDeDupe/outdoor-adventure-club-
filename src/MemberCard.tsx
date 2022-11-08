@@ -62,7 +62,7 @@ export function MemberCard({
             <div className="age">Age: {age}</div>
             <div className="rating">Rated: {rating}</div>
             <div className="activities">
-                Activities: {activities.join(', ')}
+                Last 3 activities: {activities.join(', ')}
             </div>
             <button onClick={() => removeMember(name)}>Remove member</button>
         </StyledListItem>
