@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { Activities, MemberCard } from './MemberCard';
+import { Activities } from './MemberCard';
+import { MembersList } from './MembersList';
 
 const MEMBERS = [
     {
@@ -21,22 +22,20 @@ const MEMBERS = [
 ];
 
 function App() {
-    const maxRating = 5;
-    const ratedMembers = MEMBERS.map((m) => {
-        return { ...m, rating: Math.floor(Math.random() * maxRating) };
-    });
+    const [searchText, setSearchText] = useState('');
     return (
         <div className="App">
-            {ratedMembers.map((m) => {
-                return (
-                    <MemberCard
-                        name={m.name}
-                        age={m.age}
-                        activities={m.activities}
-                        rating={m.rating}
-                    />
-                );
-            })}
+            <label>Search list:</label>
+            <input
+                onChange={(e) => {
+                    setSearchText(e.target.value);
+                }}
+                type="search"
+                id="members-search"
+                name="q"
+                value={searchText}
+            ></input>
+            <MembersList members={MEMBERS} />
         </div>
     );
 }
